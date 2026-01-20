@@ -1,0 +1,60 @@
+---
+interface Props {
+  businessName: string;
+  whatsappNumber: string;
+}
+
+const { businessName, whatsappNumber } = Astro.props;
+const [firstName, lastName] = businessName.split(' ');
+---
+
+<header class="fixed top-0 left-0 right-0 z-[1000] py-5 transition-all duration-400">
+  <div class="container">
+    <nav class="flex items-center justify-between">
+      <a href="#" class="font-display text-xl font-medium text-text-dark tracking-[0.1em]">
+        {firstName} <span class="text-blush">{lastName}</span>
+      </a>
+
+      <ul class="hidden md:flex gap-10 list-none">
+        <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
+        <li><a href="#servicios" class="nav-link">Servicios</a></li>
+        <li><a href="#galeria" class="nav-link">Galería</a></li>
+        <li><a href="#contacto" class="nav-link">Contacto</a></li>
+      </ul>
+
+      <a
+        href={`https://wa.me/${whatsappNumber}`}
+        class="hidden md:inline-flex text-xs font-semibold tracking-[0.1em] uppercase py-3 px-7 bg-blush text-white rounded-full transition-all duration-400 hover:bg-blush-dark hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blush/40"
+        target="_blank"
+        rel="noopener"
+      >
+        Reservar
+      </a>
+
+      <button class="flex md:hidden flex-col gap-1.5 bg-transparent border-none p-2.5 cursor-pointer" aria-label="Menu">
+        <span class="w-6 h-0.5 bg-text-dark rounded-sm transition-all duration-400"></span>
+        <span class="w-6 h-0.5 bg-text-dark rounded-sm transition-all duration-400"></span>
+        <span class="w-6 h-0.5 bg-text-dark rounded-sm transition-all duration-400"></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav-link {
+    @apply text-[0.8rem] font-medium tracking-[0.08em] uppercase text-text-medium relative py-2;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-blush rounded-sm transition-all duration-400;
+  }
+
+  .nav-link:hover {
+    @apply text-text-dark;
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+</style>

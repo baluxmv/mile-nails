@@ -1,0 +1,70 @@
+---
+interface Props {
+  businessName: string;
+  tagline: string;
+  whatsappNumber: string;
+  location: {
+    city: string;
+    region?: string;
+  };
+}
+
+const { businessName, tagline, whatsappNumber, location } = Astro.props;
+---
+
+<section class="min-h-screen grid grid-cols-1 md:grid-cols-2 items-center gap-16 pt-28 md:pt-24 pb-16 bg-gradient-to-br from-cream to-cream-dark relative overflow-hidden">
+  <!-- Background Shapes -->
+  <div class="absolute w-[600px] h-[600px] rounded-full -top-48 -right-48 pointer-events-none" style="background: radial-gradient(circle, rgba(212, 165, 165, 0.2) 0%, transparent 70%);"></div>
+  <div class="absolute w-[400px] h-[400px] rounded-full -bottom-24 -left-24 pointer-events-none" style="background: radial-gradient(circle, rgba(232, 196, 196, 0.3) 0%, transparent 70%);"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 pl-5 md:pl-20 lg:pl-24 order-2 md:order-1 text-center md:text-left">
+    <div class="inline-flex items-center gap-2.5 text-[0.7rem] font-semibold tracking-[0.2em] uppercase text-blush-dark mb-6 opacity-0 animate-fade-in" style="animation-delay: 0.3s;">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+      </svg>
+      <span>{location.city}, Chile</span>
+    </div>
+
+    <h1 class="mb-6 leading-[1.1]">
+      <span class="block overflow-hidden">
+        <span class="inline-block translate-y-full animate-text-reveal">{tagline.split(' ').slice(0, 3).join(' ')}</span>
+      </span>
+      <span class="block overflow-hidden">
+        <span class="inline-block translate-y-full animate-text-reveal text-blush italic" style="animation-delay: 0.1s;">
+          {tagline.split(' ').slice(3).join(' ') || 'Belleza'}
+        </span>
+      </span>
+    </h1>
+
+    <p class="text-lg text-text-light mb-10 max-w-md mx-auto md:mx-0 opacity-0 animate-fade-in" style="animation-delay: 0.6s;">
+      Especialistas en uñas, pestañas y depilación. Creamos experiencias de cuidado personal que realzan tu belleza natural.
+    </p>
+
+    <a
+      href={`https://wa.me/${whatsappNumber}`}
+      class="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.12em] uppercase py-5 px-10 bg-gradient-to-br from-blush to-blush-dark text-white rounded-full shadow-lg shadow-blush/40 opacity-0 animate-fade-in transition-all duration-400 hover:-translate-y-1 hover:shadow-xl hover:shadow-blush/50"
+      style="animation-delay: 0.8s;"
+      target="_blank"
+      rel="noopener"
+    >
+      <span>Agenda tu Cita</span>
+      <svg class="w-5 h-5 transition-transform duration-400 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Image -->
+  <div class="relative z-10 h-[350px] md:h-full md:min-h-[500px] order-1 md:order-2 -mx-5 md:mx-0">
+    <img
+      src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&q=80"
+      alt={businessName}
+      class="w-full h-full object-cover object-center"
+      loading="eager"
+    />
+    <!-- Decorative elements -->
+    <div class="absolute top-10 -left-5 w-24 h-24 border-2 border-blush-light rounded-full opacity-50"></div>
+    <div class="absolute bottom-16 right-10 w-16 h-16 bg-blush-light rounded-full opacity-40"></div>
+  </div>
+</section>

@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/global.css';
+
+// Components
+import Preloader from '../components/Preloader.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import ServicesStrip from '../components/ServicesStrip.astro';
+import About from '../components/About.astro';
+import Services from '../components/Services.astro';
+import Gallery from '../components/Gallery.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+
+// ═══════════════════════════════════════════════════════════════════
+// BUSINESS CONFIGURATION
+// Edit this section to customize for the client
+// ═══════════════════════════════════════════════════════════════════
+
+const config = {
+  // Business Info
+  businessName: 'Mile Nails',
+  tagline: 'Tu Espacio de Belleza',
+
+  // Contact
+  whatsappNumber: '56965713528',
+  instagramHandle: 'mile.nails__',
+  facebookHandle: 'mile.nails__',
+
+  // Location
+  location: {
+    city: 'Iquique',
+    region: 'Tarapacá',
+    address: '', // Optional: specific address
+  },
+
+  // Services with prices in CLP
+  services: [
+    {
+      name: 'Manicure',
+      price: 8990,
+      description: 'Cuidado completo para tus manos con esmaltado perfecto',
+      featured: false,
+    },
+    {
+      name: 'Gel Semi',
+      price: 15990,
+      description: 'Esmaltado semipermanente con brillo duradero hasta 3 semanas',
+      featured: true, // This one gets the "Popular" badge
+    },
+    {
+      name: 'Acrílicas',
+      price: 25990,
+      description: 'Extensiones esculpidas para un look espectacular',
+      featured: false,
+    },
+    {
+      name: 'Pestañas Clásicas',
+      price: 25990,
+      description: 'Extensiones pelo a pelo para una mirada natural',
+      featured: false,
+    },
+    {
+      name: 'Pestañas Volumen',
+      price: 35990,
+      description: 'Efecto dramático con técnica de volumen ruso',
+      featured: false,
+    },
+    {
+      name: 'Depilación Facial',
+      price: 5990,
+      description: 'Cejas, bozo y más con cera premium',
+      featured: false,
+    },
+  ],
+};
+---
+
+<Layout title={config.businessName}>
+  <Preloader businessName={config.businessName} />
+  <Header businessName={config.businessName} whatsappNumber={config.whatsappNumber} />
+
+  <main>
+    <Hero
+      businessName={config.businessName}
+      tagline={config.tagline}
+      whatsappNumber={config.whatsappNumber}
+      location={config.location}
+    />
+
+    <ServicesStrip />
+
+    <About businessName={config.businessName} />
+
+    <Services services={config.services} />
+
+    <Gallery />
+
+    <Testimonials />
+
+    <Contact
+      whatsappNumber={config.whatsappNumber}
+      instagramHandle={config.instagramHandle}
+      facebookHandle={config.facebookHandle}
+      location={config.location}
+    />
+  </main>
+
+  <Footer
+    businessName={config.businessName}
+    whatsappNumber={config.whatsappNumber}
+    instagramHandle={config.instagramHandle}
+    facebookHandle={config.facebookHandle}
+  />
+
+  <WhatsAppButton whatsappNumber={config.whatsappNumber} />
+</Layout>

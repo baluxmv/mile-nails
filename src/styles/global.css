@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════════════
+   MILE NAILS - SOFT FEMININE GLOBAL STYLES
+   ═══════════════════════════════════════════════════════════════════ */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  ::selection {
+    @apply bg-blush text-white;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display font-normal text-text-dark leading-tight;
+  }
+
+  h1 {
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+  }
+
+  h2 {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+  }
+
+  h3 {
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  }
+}
+
+@layer components {
+  /* Section Tag */
+  .section-tag {
+    @apply inline-flex items-center gap-3 text-[0.7rem] font-semibold tracking-[0.2em] uppercase text-blush-dark mb-4;
+  }
+
+  .section-tag::before {
+    content: '';
+    @apply w-8 h-0.5 bg-blush rounded-sm;
+  }
+
+  /* Container */
+  .container {
+    @apply max-w-[1300px] mx-auto;
+    padding-left: clamp(20px, 5vw, 60px);
+    padding-right: clamp(20px, 5vw, 60px);
+  }
+
+  /* Section Padding */
+  .section-padding {
+    padding-top: clamp(80px, 12vw, 140px);
+    padding-bottom: clamp(80px, 12vw, 140px);
+  }
+}
+
+@layer utilities {
+  /* Reveal Animations */
+  .reveal {
+    @apply opacity-0 translate-y-10 transition-all duration-700 ease-out;
+  }
+
+  .reveal.active {
+    @apply opacity-100 translate-y-0;
+  }
+
+  .reveal-left {
+    @apply opacity-0 -translate-x-16 transition-all duration-700 ease-out;
+  }
+
+  .reveal-left.active {
+    @apply opacity-100 translate-x-0;
+  }
+
+  .reveal-right {
+    @apply opacity-0 translate-x-16 transition-all duration-700 ease-out;
+  }
+
+  .reveal-right.active {
+    @apply opacity-100 translate-x-0;
+  }
+
+  /* Staggered Delays */
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+  .reveal-delay-6 { transition-delay: 0.6s; }
+
+  /* Glassmorphism Header */
+  header.scrolled {
+    @apply bg-cream/95 shadow-lg;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 30px rgba(212, 165, 165, 0.1);
+  }
+
+  /* Gallery Dragging */
+  .gallery-track {
+    cursor: grab;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .gallery-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-track.dragging {
+    cursor: grabbing;
+  }
+}

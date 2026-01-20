@@ -1,0 +1,136 @@
+---
+// Gallery component with horizontal drag scroll and lightbox
+---
+
+<section class="section-padding bg-white overflow-hidden" id="galeria">
+  <div class="container">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-5 mb-12">
+      <div>
+        <p class="section-tag reveal">Galería</p>
+        <h2 class="reveal reveal-delay-1">Nuestro <em class="italic text-blush">Trabajo</em></h2>
+      </div>
+      <div class="flex gap-3 reveal reveal-delay-2">
+        <button class="gallery-prev w-12 h-12 bg-cream rounded-full flex items-center justify-center text-text-medium transition-all duration-400 hover:bg-blush hover:text-white" aria-label="Anterior">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <button class="gallery-next w-12 h-12 bg-cream rounded-full flex items-center justify-center text-text-medium transition-all duration-400 hover:bg-blush hover:text-white" aria-label="Siguiente">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery-track flex gap-5 overflow-x-auto pb-5 scroll-snap-x snap-mandatory px-5">
+    {[
+      { src: 'photo-1604654894610-df63bc536371', label: 'French Elegante' },
+      { src: 'photo-1610992015732-2449b76344bc', label: 'Diseño Floral' },
+      { src: 'photo-1632345031435-8727f6897d53', label: 'Nude Glitter' },
+      { src: 'photo-1607779097040-26e80aa78e66', label: 'Nail Art' },
+      { src: 'photo-1519014816548-bf5fe059798b', label: 'Colores Vibrantes' },
+      { src: 'photo-1604654894610-df63bc536371', label: 'Set Completo' },
+    ].map((item, index) => (
+      <div class={`gallery-item flex-shrink-0 w-72 md:w-80 snap-start rounded-2xl overflow-hidden relative reveal reveal-delay-${Math.min(index + 1, 5)}`}>
+        <img
+          src={`https://images.unsplash.com/${item.src}?w=500&q=80`}
+          alt={item.label}
+          class="w-full aspect-[4/5] object-cover transition-transform duration-700 hover:scale-110"
+          loading="lazy"
+        />
+        <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-text-dark/70 to-transparent flex items-end p-6 opacity-0 transition-opacity duration-400">
+          <span class="text-sm font-medium tracking-wide text-white">{item.label}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox fixed inset-0 bg-text-dark/95 z-[9999] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-400">
+  <div class="lightbox-content max-w-[90vw] max-h-[90vh] relative">
+    <button class="lightbox-close absolute -top-12 right-0 bg-transparent border-none text-white text-3xl cursor-pointer transition-colors duration-200 hover:text-blush">&times;</button>
+    <img src="" alt="Gallery Image" class="max-w-full max-h-[90vh] object-contain rounded-xl" />
+  </div>
+</div>
+
+<style>
+  .gallery-item:hover .gallery-overlay {
+    @apply opacity-100;
+  }
+
+  .lightbox.active {
+    @apply opacity-100 pointer-events-auto;
+  }
+</style>
+
+<script>
+  // Gallery drag functionality
+  const galleryTrack = document.querySelector('.gallery-track');
+  let isDown = false;
+  let startX: number;
+  let scrollLeft: number;
+
+  galleryTrack?.addEventListener('mousedown', (e: MouseEvent) => {
+    isDown = true;
+    galleryTrack.classList.add('dragging');
+    startX = e.pageX - (galleryTrack as HTMLElement).offsetLeft;
+    scrollLeft = galleryTrack.scrollLeft;
+  });
+
+  galleryTrack?.addEventListener('mouseleave', () => {
+    isDown = false;
+    galleryTrack.classList.remove('dragging');
+  });
+
+  galleryTrack?.addEventListener('mouseup', () => {
+    isDown = false;
+    galleryTrack.classList.remove('dragging');
+  });
+
+  galleryTrack?.addEventListener('mousemove', (e: MouseEvent) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - (galleryTrack as HTMLElement).offsetLeft;
+    const walk = (x - startX) * 2;
+    galleryTrack.scrollLeft = scrollLeft - walk;
+  });
+
+  // Gallery navigation
+  const prevBtn = document.querySelector('.gallery-prev');
+  const nextBtn = document.querySelector('.gallery-next');
+
+  prevBtn?.addEventListener('click', () => {
+    galleryTrack?.scrollBy({ left: -340, behavior: 'smooth' });
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    galleryTrack?.scrollBy({ left: 340, behavior: 'smooth' });
+  });
+
+  // Lightbox
+  const lightbox = document.querySelector('.lightbox');
+  const lightboxImg = lightbox?.querySelector('img');
+  const lightboxClose = lightbox?.querySelector('.lightbox-close');
+
+  document.querySelectorAll('.gallery-item img').forEach(img => {
+    img.addEventListener('click', () => {
+      if (lightboxImg) {
+        lightboxImg.src = (img as HTMLImageElement).src;
+      }
+      lightbox?.classList.add('active');
+    });
+  });
+
+  lightboxClose?.addEventListener('click', () => {
+    lightbox?.classList.remove('active');
+  });
+
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      lightbox.classList.remove('active');
+    }
+  });
+</script>

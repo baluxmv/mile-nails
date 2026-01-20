@@ -1,0 +1,31 @@
+---
+interface Props {
+  businessName: string;
+}
+
+const { businessName } = Astro.props;
+const [firstName, lastName] = businessName.split(' ');
+---
+
+<div class="preloader fixed inset-0 bg-cream z-[9999] flex items-center justify-center flex-col gap-6">
+  <div class="font-display text-3xl md:text-4xl font-normal text-text-dark tracking-[0.15em]">
+    {firstName} <span class="text-blush">{lastName}</span>
+  </div>
+  <div class="flex gap-2">
+    <span class="w-2 h-2 bg-blush rounded-full animate-dot-bounce"></span>
+    <span class="w-2 h-2 bg-blush rounded-full animate-dot-bounce" style="animation-delay: 0.2s;"></span>
+    <span class="w-2 h-2 bg-blush rounded-full animate-dot-bounce" style="animation-delay: 0.4s;"></span>
+  </div>
+</div>
+
+<script>
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const preloader = document.querySelector('.preloader');
+      if (preloader) {
+        preloader.classList.add('opacity-0', 'pointer-events-none');
+        preloader.style.transition = 'opacity 0.5s ease';
+      }
+    }, 2000);
+  });
+</script>

@@ -1,0 +1,70 @@
+---
+interface Testimonial {
+  name: string;
+  text: string;
+  type?: string;
+}
+
+interface Props {
+  testimonials?: Testimonial[];
+}
+
+const { testimonials = [
+  {
+    name: 'Carolina Muñoz',
+    text: 'Las mejores uñas que me han hecho en Iquique. Tiene una paciencia increíble y el resultado siempre es perfecto.',
+    type: 'Clienta frecuente'
+  },
+  {
+    name: 'Valentina Lagos',
+    text: 'Me hice las pestañas y quedé encantada. Se ven súper naturales y me duran mucho. Totalmente recomendado.',
+    type: 'Primera visita'
+  },
+  {
+    name: 'Andrea Soto',
+    text: 'Excelente servicio integral. Me hago las uñas y la depilación acá. Siempre salgo feliz. El ambiente es muy acogedor.',
+    type: 'Clienta VIP'
+  }
+] } = Astro.props;
+
+const getInitial = (name: string) => name.charAt(0);
+---
+
+<section class="section-padding bg-cream-dark relative overflow-hidden">
+  <!-- Background Quote -->
+  <div class="absolute -top-5 left-5 font-display text-[30vw] text-blush-light/30 leading-none pointer-events-none select-none">"</div>
+
+  <div class="container relative z-10">
+    <div class="text-center mb-16">
+      <p class="section-tag justify-center reveal">Testimonios</p>
+      <h2 class="reveal reveal-delay-1">Lo que Dicen<br>Nuestras <em class="italic text-blush-dark">Clientas</em></h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      {testimonials.map((testimonial, index) => (
+        <div class={`bg-white p-9 rounded-3xl shadow-lg shadow-blush/10 reveal reveal-delay-${index + 1}`}>
+          <!-- Stars -->
+          <div class="flex gap-1 mb-5">
+            {[...Array(5)].map(() => (
+              <svg class="w-4 h-4 text-blush fill-blush" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            ))}
+          </div>
+
+          <p class="font-display text-lg italic text-text-dark leading-relaxed mb-6">"{testimonial.text}"</p>
+
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blush-light to-blush flex items-center justify-center font-display text-lg font-medium text-white">
+              {getInitial(testimonial.name)}
+            </div>
+            <div>
+              <h4 class="font-body text-sm font-semibold text-text-dark mb-0.5">{testimonial.name}</h4>
+              <span class="text-xs text-text-light">{testimonial.type}</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
